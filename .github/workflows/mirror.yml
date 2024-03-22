@@ -23,9 +23,11 @@ jobs:
         URLS=$URLS
         REPO=$REPO
         for URLS in $(echo $URLS | tr "," "\n"); do
-           if git clone --branch $BRANCH $URLS/$REPO.git mirror; then
-             break 2
-           fi
+          for REPO in $(echo $REPO | tr "," "\n"); do
+            if git clone --branch $BRANCH $URLS/$REPO.git mirror; then
+              break 2
+            fi
+          done
         done
       env:
         URLS: ${{ secrets.URLS }}
