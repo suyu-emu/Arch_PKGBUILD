@@ -21,7 +21,8 @@ jobs:
     - name: Clone Git Repo
       run: |
         REPO=$(basename "${{ github.repository }}")
-        git clone --branch ${{ github.ref }} ${{ secrets.URL }}/$REPO.git mirror
+        BRANCH=$(basename "${{ github.ref }}")
+        git clone --branch $BRANCH ${{ secrets.URL }}/$REPO.git mirror
 
     - name: Copy GitHub Action file to cloned repo
       run: |
