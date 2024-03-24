@@ -20,19 +20,8 @@ jobs:
 
     - name: Clone Git Repo
       run: |
-        URLS=$URLS
-        REPO=$REPO
-        for URLS in $(echo $URLS | tr "," "\n"); do
-          for REPO in $(echo $REPO | tr "," "\n"); do
-            if git clone --branch $BRANCH $URLS/$REPO.git mirror; then
-              break 2
-            fi
-          done
-        done
-      env:
-        URLS: ${{ secrets.URLS }}
-        REPO: ${{ secrets.REPO }}
-        BRANCH: ${{ secrets.BRANCH }}
+        REPO=$(basename "${{ github.repository }}")
+        git clone --branch ${{ github.ref }} ${{ secrets.URL }}/$REPO.git mirror
 
     - name: Copy GitHub Action file to cloned repo
       run: |
